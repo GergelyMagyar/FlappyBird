@@ -19,7 +19,7 @@ public class Column
 
         if(hasPipe)
         {
-            int height = Random.Range(1, _size / 2);
+            int height = Random.Range(1, _size / 2 + 2);
 
             for (int i = 0; i < height - 1; i++)
             {

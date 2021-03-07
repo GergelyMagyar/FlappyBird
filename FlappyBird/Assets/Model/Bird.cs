@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bird
 {
     private Vector2 _position;
+    public Vector2 Position { get { return _position; } }
 
     private float _size;
 
@@ -12,7 +13,7 @@ public class Bird
 
     private float _jumpTimeSec;
 
-    private float _countDown;
+    private float _jumpEnd;
 
     private bool _inJump;
 
@@ -22,11 +23,10 @@ public class Bird
 
     public Bird(float size = 2.5f, float jumpTimeSec = 0.5f, float speed = 0.1f, float jumpSpeed = 0.1f)
     {
-        _position = new Vector2(0f, 0f);
+        _position = new Vector2(0f, 3.5f);
         _size = size;
         _dead = false;
         _jumpTimeSec = jumpTimeSec;
-        _countDown = 0f;
         _inJump = false;
         _speed = speed;
         _jumpSpeed = jumpSpeed;
@@ -34,7 +34,10 @@ public class Bird
 
     public void Update()
     {
-        //cooldown
+        if(_inJump && Time.time >= _jumpEnd)
+        {
+            _inJump = false;
+        }
 
         Vector2 movement;
 
@@ -53,7 +56,7 @@ public class Bird
     public void Jump()
     {
         _inJump = true;
-        _countDown = _jumpTimeSec;
+        _jumpEnd = Time.time + _jumpTimeSec;
     }
 
 

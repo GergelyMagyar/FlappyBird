@@ -24,6 +24,9 @@ public class GameControllerScript : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKey("space"))
+            _gameModel.JumpBird();
+
         _gameModel.UpdateModel();
 
         gameView.UpdateView();

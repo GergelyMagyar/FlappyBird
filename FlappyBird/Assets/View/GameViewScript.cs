@@ -11,8 +11,8 @@ public class GameViewScript : MonoBehaviour
     private GameModel _gameModel;
 
     public Tilemap tileGrid;
-    public GameObject bird;
     public GameObject cameraObject;
+    public GameObject birdObject;
 
     public TileBase skyTile;
     public TileBase pipeTile;
@@ -35,6 +35,8 @@ public class GameViewScript : MonoBehaviour
             _camera = Camera.main;
         else
             _camera = cameraObject.GetComponent<Camera>();
+
+        birdObject.transform.localPosition = _gameModel.BirdPosition;
 
         for(int i = 0; i < _rowSize; i++)
         {
@@ -74,8 +76,7 @@ public class GameViewScript : MonoBehaviour
 
         _camera.transform.localPosition += new Vector3(_birdSpeed, 0f, 0f);
 
-
-        //move bird
+        birdObject.transform.localPosition = _gameModel.BirdPosition;
     }
 
     public void Forward()
