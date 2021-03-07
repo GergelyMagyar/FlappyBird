@@ -164,6 +164,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723b58043056d714ba89c78ae9ea6a3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameView: {fileID: 617569360}
+  columnSize: 7
+  rowSize: 30
+  bidSize: 0
+  birdJumpTimeSec: 0.5
+  birdSpeed: 0.02
+  birdJumpSpeed: 0.1
 --- !u!1 &421814289
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +342,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 009186ec280a9f34c9076aec2a458513, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileGrid: {fileID: 956989079}
+  bird: {fileID: 0}
+  cameraObject: {fileID: 519420028}
+  skyTile: {fileID: 11400000, guid: 4b5804c89e645de4795cd76a2f2f5de1, type: 2}
+  pipeTile: {fileID: 11400000, guid: eab6bb7b8f0b59c47b303fa614e5eade, type: 2}
+  pipeUpTile: {fileID: 11400000, guid: f6281b29b00ea0d479b93b3623e6428d, type: 2}
+  pipeDownTile: {fileID: 11400000, guid: a8062c4fe72c2fa43aa47ee7e8622ca7, type: 2}
+  grassTile: {fileID: 0}
+  illegalTile: {fileID: 0}
 --- !u!1 &956989076
 GameObject:
   m_ObjectHideFlags: 0
