@@ -168,9 +168,9 @@ MonoBehaviour:
   columnSize: 7
   rowSize: 30
   bidSize: 0
-  birdJumpTimeSec: 0.5
+  birdJumpTimeSec: 0.06
   birdSpeed: 0.016
-  birdJumpSpeed: 0.016
+  birdJumpSpeed: 0.032
 --- !u!1 &349834307
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
