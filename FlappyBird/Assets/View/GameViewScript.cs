@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class GameViewScript : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameViewScript : MonoBehaviour
     public Tilemap tileGrid;
     public GameObject cameraObject;
     public GameObject birdObject;
+    public Text scoreText;
 
     public TileBase skyTile;
     public TileBase pipeTile;
@@ -77,6 +79,8 @@ public class GameViewScript : MonoBehaviour
         _camera.transform.localPosition += new Vector3(_birdSpeed, 0f, 0f);
 
         birdObject.transform.localPosition = _gameModel.BirdPosition;
+
+        scoreText.text = "Score: " + _gameModel.Score;
     }
 
     public void Forward()

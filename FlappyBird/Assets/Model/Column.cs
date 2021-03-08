@@ -12,12 +12,17 @@ public class Column
     private int _size;
     private TileType[] _column;
 
+    private bool _hasPipe;
+    public bool HasPipe { get { return _hasPipe; } }
+
     public Column(int size = 7, bool hasPipe = true)
     {
         _size = size;
         _column = new TileType[_size];
 
-        if(hasPipe)
+        _hasPipe = hasPipe;
+
+        if(_hasPipe)
         {
             int height = Random.Range(1, _size / 2 + 2);
 

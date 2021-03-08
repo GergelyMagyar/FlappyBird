@@ -17,11 +17,17 @@ public class GameModel
     private long _updateCount;
     public long ForwardCount { get { return _forwardCount; } }
 
+    private float _lastX;
+    private int _score;
+    public int Score { get { return _score; } }
+
+    public Vector2 BirdPosition{ get { return _bird.Position; } }
+
     public UnityEvent ModelForwarded;
     public UnityEvent ModelBackToZero;
     public UnityEvent GameOver;
 
-    public Vector2 BirdPosition { get { return _bird.Position; } }
+    
 
     public GameModel(int columnSize = 7, int rowSize = 30, float birdSize = 2.5f, float birdJumpTimeSec = 0.5f, float birdSpeed = 0.1f, float birdJumpSpeed = 0.1f)
     {
@@ -54,7 +60,15 @@ public class GameModel
         {
             GameOver.Invoke();
         }
-            
+        else
+        {
+            if(Mathf.FloorToInt(_lastX) < Mathf.FloorToInt(BirdPosition.x) && _columns[Mathf.FloorToInt(_lastX - _forwardCount)].HasPipe)
+            {
+                _score++;
+            }
+        }
+
+        _lastX = BirdPosition.x;
 
         _updateCount++;
         if (_updateCount >= 32000)
