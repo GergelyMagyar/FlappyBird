@@ -81,6 +81,46 @@ public class GameViewScript : MonoBehaviour
 
     public void Forward()
     {
-        //paint new grid cells, delete old?
+        int forwardCount = (int)_gameModel.ForwardCount;
+
+        for (int j = 0; j < _columnSize; j++)
+        {
+            Vector3Int index1 = new Vector3Int(forwardCount- 1, j, 0);
+            Vector3Int index2 = new Vector3Int(forwardCount - 2, j, 0);
+
+            tileGrid.SetTile(index1, null);
+            tileGrid.SetTile(index2, null);
+        }
+
+
+        for(int i = 1; i <= 2; i++)
+        {
+            for (int j = 0; j < _columnSize; j++)
+            {
+                Vector3Int modelIndex = new Vector3Int(_rowSize - i, j, 0);
+                Vector3Int viewIndex = new Vector3Int(_rowSize + forwardCount - i, j, 0);
+
+                TileType tileTpe = _gameModel.getTileType(modelIndex);
+
+                switch (tileTpe)
+                {
+                    case TileType.Sky:
+                        tileGrid.SetTile(viewIndex, skyTile);
+                        break;
+                    case TileType.Pipe:
+                        tileGrid.SetTile(viewIndex, pipeTile);
+                        break;
+                    case TileType.PipeUp:
+                        tileGrid.SetTile(viewIndex, pipeUpTile);
+                        break;
+                    case TileType.PipeDown:
+                        tileGrid.SetTile(viewIndex, pipeDownTile);
+                        break;
+                    case TileType.Illegal:
+                        tileGrid.SetTile(viewIndex, illegalTile);
+                        break;
+                }
+            }
+        }
     }
 }

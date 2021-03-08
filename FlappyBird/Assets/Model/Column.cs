@@ -47,7 +47,11 @@ public class Column
     public TileType getTileType(int index)
     {
         if (index < 0 || index >= _size)
+        {
+            Debug.Log("column getTileType: illegal tile, " + index);
             return TileType.Illegal;
+        }
+            
 
         return _column[index];
     }

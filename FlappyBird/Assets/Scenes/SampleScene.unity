@@ -168,9 +168,9 @@ MonoBehaviour:
   columnSize: 7
   rowSize: 30
   bidSize: 0
-  birdJumpTimeSec: 0.06
-  birdSpeed: 0.016
-  birdJumpSpeed: 0.032
+  birdJumpTimeSec: 0.04
+  birdSpeed: 0.012
+  birdJumpSpeed: 0.03
 --- !u!1 &349834307
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,7 +349,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
