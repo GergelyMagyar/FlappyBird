@@ -49,7 +49,8 @@ public class GameModel
         _bird.Update();
 
         Vector2 forwardPosition = _bird.Position - new Vector2(_forwardCount, 0);
-        if(PositionToTile(forwardPosition) == TileType.Pipe || PositionToTile(forwardPosition) == TileType.PipeUp || PositionToTile(forwardPosition) == TileType.PipeDown)
+        if(forwardPosition.y <= 0 || forwardPosition.y >= _columnSize ||
+            PositionToTile(forwardPosition) == TileType.Pipe || PositionToTile(forwardPosition) == TileType.PipeUp || PositionToTile(forwardPosition) == TileType.PipeDown)
         {
             GameOver.Invoke();
         }
