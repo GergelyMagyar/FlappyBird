@@ -12,6 +12,7 @@ public class GameModel
     private Bird _bird;
 
     private float _birdSpeed;
+    private float _birdSize;
 
     private int _forwardCount;
     private int _updateCount;
@@ -38,10 +39,11 @@ public class GameModel
         _columns = new List<Column>();
         _bird = new Bird(birdSize, birdJumpTimeSec, birdSpeed, birdJumpSpeed);
         _birdSpeed = birdSpeed;
+        _birdSize = birdSize;
         
         for(int i = 0; i < rowSize; i++)
         {
-            if(i % 2 == 0)
+            if(i < 3 || i % 2 == 0)
                 _columns.Add(new Column(_columnSize, false));
             else
                 _columns.Add(new Column(_columnSize, true));
@@ -53,8 +55,16 @@ public class GameModel
         _bird.Update();
 
         Vector2 forwardPosition = _bird.Position - new Vector2(_forwardCount, 0);
-        if(forwardPosition.y <= 0 || forwardPosition.y >= _columnSize ||
-            PositionToTile(forwardPosition) == TileType.Pipe || PositionToTile(forwardPosition) == TileType.PipeUp || PositionToTile(forwardPosition) == TileType.PipeDown)
+        Vector2 forwardPositionTop = _bird.Position - new Vector2(_forwardCount, - _birdSize / 2);
+        Vector2 forwardPositionBottom = _bird.Position - new Vector2(_forwardCount, _birdSize / 2);
+        Vector2 forwardPositionLeft = _bird.Position - new Vector2(_forwardCount - _birdSize / 2, 0);
+        Vector2 forwardPositionRight = _bird.Position - new Vector2(_forwardCount + _birdSize / 2, 0);
+        if (forwardPosition.y <= 0 || forwardPosition.y >= _columnSize ||
+            PositionToTile(forwardPosition) == TileType.Pipe || PositionToTile(forwardPosition) == TileType.PipeUp || PositionToTile(forwardPosition) == TileType.PipeDown ||
+            PositionToTile(forwardPositionTop) == TileType.Pipe || PositionToTile(forwardPositionTop) == TileType.PipeUp || PositionToTile(forwardPositionTop) == TileType.PipeDown ||
+            PositionToTile(forwardPositionBottom) == TileType.Pipe || PositionToTile(forwardPositionBottom) == TileType.PipeUp || PositionToTile(forwardPositionBottom) == TileType.PipeDown ||
+            PositionToTile(forwardPositionLeft) == TileType.Pipe || PositionToTile(forwardPositionLeft) == TileType.PipeUp || PositionToTile(forwardPositionLeft) == TileType.PipeDown ||
+            PositionToTile(forwardPositionRight) == TileType.Pipe || PositionToTile(forwardPositionRight) == TileType.PipeUp || PositionToTile(forwardPositionRight) == TileType.PipeDown)
         {
             GameOver.Invoke();
         }
