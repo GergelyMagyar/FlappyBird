@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class GameViewScript : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class GameViewScript : MonoBehaviour
     public GameObject cameraObject;
     public GameObject birdObject;
     public Text scoreText;
+    public Canvas scoreCanvas;
+    public Canvas gameOverCanvas;
+    public Text gameOverScoreText;
+    public Button replayButton;
 
     public TileBase skyTile;
     public TileBase pipeTile;
@@ -28,15 +33,26 @@ public class GameViewScript : MonoBehaviour
 
     public void SetupView(GameModel gameModel, int columnSize = 7, int rowSize = 30, float birdSpeed = 0.5f)
     {
+        tileGrid.ClearAllTiles();
+        EventSystem.current.SetSelectedGameObject(null);
+
+        scoreCanvas.enabled = true;
+        gameOverCanvas.enabled = false;
+
         _columnSize = columnSize;
         _rowSize = rowSize;
         _birdSpeed = birdSpeed;
         _gameModel = gameModel;
 
         if (cameraObject == null)
+        {
             _camera = Camera.main;
+        }
         else
+        {
             _camera = cameraObject.GetComponent<Camera>();
+            cameraObject.transform.localPosition = new Vector3(_gameModel.BirdPosition.x, _gameModel.BirdPosition.y, -10);
+        }
 
         birdObject.transform.localPosition = _gameModel.BirdPosition;
 
@@ -68,6 +84,16 @@ public class GameViewScript : MonoBehaviour
                 }
             }
         }
+
+        for(int i = -10; i < 0; i++)
+        {
+            for(int j = 0; j < _columnSize; j++)
+            {
+                Vector3Int index = new Vector3Int(i, j, 0);
+
+                tileGrid.SetTile(index, skyTile);
+            }
+        }
     }
 
     public void UpdateView()
@@ -85,7 +111,7 @@ public class GameViewScript : MonoBehaviour
 
     public void Forward()
     {
-        int forwardCount = (int)_gameModel.ForwardCount;
+        int forwardCount = _gameModel.ForwardCount;
 
         for (int j = 0; j < _columnSize; j++)
         {
@@ -126,5 +152,12 @@ public class GameViewScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void GameOver()
+    {
+        scoreCanvas.enabled = false;
+        gameOverCanvas.enabled = true;
+        gameOverScoreText.text = _gameModel.Score + " points";
     }
 }

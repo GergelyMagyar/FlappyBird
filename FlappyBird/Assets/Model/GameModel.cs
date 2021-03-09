@@ -13,9 +13,9 @@ public class GameModel
 
     private float _birdSpeed;
 
-    private long _forwardCount;
-    private long _updateCount;
-    public long ForwardCount { get { return _forwardCount; } }
+    private int _forwardCount;
+    private int _updateCount;
+    public int ForwardCount { get { return _forwardCount; } }
 
     private float _lastX;
     private int _score;
@@ -24,7 +24,6 @@ public class GameModel
     public Vector2 BirdPosition{ get { return _bird.Position; } }
 
     public UnityEvent ModelForwarded;
-    public UnityEvent ModelBackToZero;
     public UnityEvent GameOver;
 
     
@@ -32,7 +31,6 @@ public class GameModel
     public GameModel(int columnSize = 7, int rowSize = 30, float birdSize = 2.5f, float birdJumpTimeSec = 0.5f, float birdSpeed = 0.1f, float birdJumpSpeed = 0.1f)
     {
         ModelForwarded = new UnityEvent();
-        ModelBackToZero = new UnityEvent();
         GameOver = new UnityEvent();
 
         _columnSize = columnSize;
@@ -71,9 +69,9 @@ public class GameModel
         _lastX = BirdPosition.x;
 
         _updateCount++;
-        if (_updateCount >= 32000)
+        if (_updateCount >= 128000)
         {
-            //_updateCount = 0;
+            _updateCount = 64000;
         }
 
 
@@ -90,11 +88,6 @@ public class GameModel
 
         _forwardCount += 2;
         ModelForwarded.Invoke();
-        if (_forwardCount >= 100)
-        {
-            //_forwardCount = 0;
-            //ModelBackToZero.Invoke();
-        }
     }
 
     public void JumpBird()

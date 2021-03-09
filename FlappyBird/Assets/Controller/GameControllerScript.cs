@@ -19,6 +19,13 @@ public class GameControllerScript : MonoBehaviour
 
     void Start()
     {
+        gameView.replayButton.onClick.AddListener(StartGame);
+
+        StartGame();
+    }
+
+    void StartGame()
+    {
         _gameOver = false;
 
         _gameModel = new GameModel(columnSize, rowSize, bidSize, birdJumpTimeSec, birdSpeed, birdJumpSpeed);
@@ -30,20 +37,21 @@ public class GameControllerScript : MonoBehaviour
 
     void Update()
     {
-        if (_gameOver)
-            return; 
+        if (!_gameOver)
+        {
+            if (Input.GetKey("space"))
+                _gameModel.JumpBird();
 
-        if (Input.GetKey("space"))
-            _gameModel.JumpBird();
+            _gameModel.UpdateModel();
 
-        _gameModel.UpdateModel();
-
-        gameView.UpdateView();
+            gameView.UpdateView();
+        }
     }
 
     void OnGameOver()
     {
         _gameOver = true;
+        gameView.GameOver();
     }
 
     void OnModelForwarded()
