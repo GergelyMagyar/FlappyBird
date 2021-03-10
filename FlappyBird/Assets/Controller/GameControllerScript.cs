@@ -46,6 +46,11 @@ public class GameControllerScript : MonoBehaviour
 
             gameView.UpdateView();
         }
+
+        if(Input.GetKey("q"))
+        {
+            CloseGame();
+        }
     }
 
     void OnGameOver()
@@ -57,5 +62,9 @@ public class GameControllerScript : MonoBehaviour
     void OnModelForwarded()
     {
         gameView.Forward();
+    }
+    public void CloseGame()
+    {
+        Application.Quit();
     }
 }
