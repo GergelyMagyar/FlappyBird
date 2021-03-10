@@ -20,6 +20,9 @@ public class GameViewScript : MonoBehaviour
     public Canvas gameOverCanvas;
     public Text gameOverScoreText;
     public Button replayButton;
+    public Canvas startCanvas;
+    public Button aiButton;
+    public Button manualButton;
 
     public TileBase skyTile;
     public TileBase pipeTile;
@@ -30,13 +33,23 @@ public class GameViewScript : MonoBehaviour
 
     private Camera _camera;
 
+    private Mode _mode;
 
-    public void SetupView(GameModel gameModel, int columnSize = 7, int rowSize = 30, float birdSpeed = 0.5f)
+    public void CanvasInit()
     {
+        scoreCanvas.enabled = false;
+        startCanvas.enabled = true;
+        gameOverCanvas.enabled = false;
+    }
+
+    public void SetupView(Mode mode, GameModel gameModel, int columnSize = 7, int rowSize = 30, float birdSpeed = 0.5f)
+    {
+        _mode = mode;
         tileGrid.ClearAllTiles();
         EventSystem.current.SetSelectedGameObject(null);
 
         scoreCanvas.enabled = true;
+        startCanvas.enabled = false;
         gameOverCanvas.enabled = false;
 
         _columnSize = columnSize;
@@ -156,8 +169,12 @@ public class GameViewScript : MonoBehaviour
 
     public void GameOver()
     {
-        scoreCanvas.enabled = false;
-        gameOverCanvas.enabled = true;
-        gameOverScoreText.text = _gameModel.Score + " points";
+        if(_mode == Mode.Manual)
+        {
+            startCanvas.enabled = false;
+            scoreCanvas.enabled = false;
+            gameOverCanvas.enabled = true;
+            gameOverScoreText.text = _gameModel.Score + " points";
+        }
     }
 }

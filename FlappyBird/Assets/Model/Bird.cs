@@ -9,8 +9,6 @@ public class Bird
 
     private float _size;
 
-    private bool _dead;
-
     private float _jumpTimeSec;
 
     private float _jumpEnd;
@@ -25,7 +23,6 @@ public class Bird
     {
         _position = new Vector2(0f, 3.5f);
         _size = size;
-        _dead = false;
         _jumpTimeSec = jumpTimeSec;
         _inJump = false;
         _speed = speed;

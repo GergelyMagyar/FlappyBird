@@ -1,38 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+public enum Mode
+{
+    AI, Manual
+}
 
 public class GameControllerScript : MonoBehaviour
 {
     private GameModel _gameModel;
-    
-    public GameViewScript gameView;
 
-    public int columnSize;
-    public int rowSize;
-    public float bidSize;
-    public float birdJumpTimeSec;
-    public float birdSpeed;
-    public float birdJumpSpeed;
+    [SerializeField] private GameViewScript _gameView;
+
+    [SerializeField] private int _columnSize;
+    [SerializeField] private int _rowSize;
+    [SerializeField] private float _bidSize;
+    [SerializeField] private float _birdJumpTimeSec;
+    [SerializeField] private float _birdSpeed;
+    [SerializeField] private float _birdJumpSpeed;
 
     private bool _gameOver;
 
+    private Mode _mode;
+
+    public UnityEvent GameOver;
+    public UnityEvent NewGameStarted;
+
     void Start()
     {
-        gameView.replayButton.onClick.AddListener(StartGame);
+        _gameOver = true;
+        _gameView.CanvasInit();
 
-        StartGame();
+        _gameView.manualButton.onClick.AddListener(() => { StartGame(Mode.Manual); });
+        _gameView.aiButton.onClick.AddListener(() => { StartGame(Mode.AI); });
+        _gameView.replayButton.onClick.AddListener(() => { StartGame(Mode.Manual); });
     }
 
-    void StartGame()
+    void StartGame(Mode mode)
     {
+        _mode = mode;
+
         _gameOver = false;
 
-        _gameModel = new GameModel(columnSize, rowSize, bidSize, birdJumpTimeSec, birdSpeed, birdJumpSpeed);
+        _gameModel = new GameModel(_columnSize, _rowSize, _bidSize, _birdJumpTimeSec, _birdSpeed, _birdJumpSpeed);
         _gameModel.GameOver.AddListener(OnGameOver);
         _gameModel.ModelForwarded.AddListener(OnModelForwarded);
 
-        gameView.SetupView(_gameModel, columnSize, rowSize, birdSpeed);
+        _gameView.SetupView(_mode, _gameModel, _columnSize, _rowSize, _birdSpeed);
     }
 
     void Update()
@@ -44,7 +60,7 @@ public class GameControllerScript : MonoBehaviour
 
             _gameModel.UpdateModel();
 
-            gameView.UpdateView();
+            _gameView.UpdateView();
         }
 
         if(Input.GetKey("q"))
@@ -55,13 +71,23 @@ public class GameControllerScript : MonoBehaviour
 
     void OnGameOver()
     {
-        _gameOver = true;
-        gameView.GameOver();
+        if(_mode == Mode.AI)
+        {
+            _gameOver = true;
+            GameOver.Invoke();
+
+            StartGame(Mode.AI);
+        }
+        else
+        {
+            _gameOver = true;
+            _gameView.GameOver();
+        }
     }
 
     void OnModelForwarded()
     {
-        gameView.Forward();
+        _gameView.Forward();
     }
     public void CloseGame()
     {
