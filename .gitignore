@@ -17,6 +17,7 @@
 /FlappyBird/[Bb]uilds/
 /FlappyBird/[Ll]ogs/
 /FlappyBird/[Mm]emoryCaptures/
+/FlappyBird/venv/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/[Aa]ssets/**/*.meta
