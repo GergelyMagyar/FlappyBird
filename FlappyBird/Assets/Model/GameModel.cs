@@ -23,6 +23,7 @@ public class GameModel
     public int Score { get { return _score; } }
 
     public Vector2 BirdPosition{ get { return _bird.Position; } }
+    public bool BirdInJump { get { return _bird.InJump; } }
 
     public UnityEvent ModelForwarded;
     public UnityEvent GameOver;

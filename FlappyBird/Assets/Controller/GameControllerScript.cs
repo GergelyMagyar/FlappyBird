@@ -28,7 +28,39 @@ public class GameControllerScript : MonoBehaviour
     public UnityEvent GameOver;
     public UnityEvent NewGameStarted;
 
-    void Start()
+    public Vector2 BirdPosition
+    {
+        get
+        {
+            if(_gameModel != null)
+            {
+                return _gameModel.BirdPosition;
+            }
+            else
+            {
+                return new Vector2(-1, -1);
+            }
+        }
+    }
+
+    public bool BirdInJump
+    {
+        get
+        {
+            if (_gameModel != null)
+            {
+                return _gameModel.BirdInJump;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    //get next tiles
+
+    private void Start()
     {
         _gameOver = true;
         _gameView.CanvasInit();
@@ -38,7 +70,7 @@ public class GameControllerScript : MonoBehaviour
         _gameView.replayButton.onClick.AddListener(() => { StartGame(Mode.Manual); });
     }
 
-    void StartGame(Mode mode)
+    public void StartGame(Mode mode)
     {
         _mode = mode;
 
@@ -51,7 +83,7 @@ public class GameControllerScript : MonoBehaviour
         _gameView.SetupView(_mode, _gameModel, _columnSize, _rowSize, _birdSpeed);
     }
 
-    void Update()
+    private void Update()
     {
         if (!_gameOver)
         {
@@ -69,7 +101,7 @@ public class GameControllerScript : MonoBehaviour
         }
     }
 
-    void OnGameOver()
+    private void OnGameOver()
     {
         if(_mode == Mode.AI)
         {
@@ -85,12 +117,18 @@ public class GameControllerScript : MonoBehaviour
         }
     }
 
-    void OnModelForwarded()
+    private void OnModelForwarded()
     {
         _gameView.Forward();
     }
     public void CloseGame()
     {
         Application.Quit();
+    }
+
+    public void JumpBird()
+    {
+        if(_gameModel != null)
+            _gameModel.JumpBird();
     }
 }

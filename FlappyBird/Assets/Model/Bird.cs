@@ -14,6 +14,7 @@ public class Bird
     private float _jumpEnd;
 
     private bool _inJump;
+    public bool InJump { get { return _inJump; } }
 
     private float _speed;
 
